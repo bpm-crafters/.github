@@ -52,11 +52,11 @@ graph LR
 
 ## The adapters
 
-| Adapter | Engine | Integration modes | Latest release | API version |
-| --- | --- | --- | --- | --- |
-| [`process-engine-adapters-camunda-7`](https://github.com/bpm-crafters/process-engine-adapters-camunda-7) | Camunda Platform 7 | Embedded · Remote | `2026.06.2` | 1.7 |
-| [`process-engine-adapters-camunda-8`](https://github.com/bpm-crafters/process-engine-adapters-camunda-8) | Camunda Platform 8 / Zeebe | Remote (SaaS & self-managed) | `2026.06.2` | 1.7 |
-| [`process-engine-adapters-cib-seven`](https://github.com/bpm-crafters/process-engine-adapters-cib-seven) | CIB seven | Embedded | `2026.04.1` | 1.5 |
-| [`process-engine-adapters-operaton`](https://github.com/bpm-crafters/process-engine-adapters-operaton) | Operaton | Embedded · Remote | *unreleased* | 1.7 |
+| Adapter | Engine | Integration modes |
+| --- | --- | --- |
+| [`process-engine-adapters-camunda-7`](https://github.com/bpm-crafters/process-engine-adapters-camunda-7) | Camunda Platform 7 | Embedded · Remote |
+| [`process-engine-adapters-camunda-8`](https://github.com/bpm-crafters/process-engine-adapters-camunda-8) | Camunda Platform 8 / Zeebe | Remote (SaaS & self-managed) |
+| [`process-engine-adapters-cib-seven`](https://github.com/bpm-crafters/process-engine-adapters-cib-seven) | CIB seven | Embedded |
+| [`process-engine-adapters-operaton`](https://github.com/bpm-crafters/process-engine-adapters-operaton) | Operaton | Embedded · Remote |
 
-Version/compatibility tables are maintained in each adapter's `README.md`.
+Current versions and engine/API compatibility are maintained in each adapter's `README.md`.
