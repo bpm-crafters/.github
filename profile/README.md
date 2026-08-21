@@ -14,7 +14,7 @@ you actually run. Change the engine, keep the code.
 
 - 📚 **[Documentation](https://bpm-crafters.github.io/process-engine-api-docs/stable/)** — intro, quickstarts and the full API reference
 - 🧠 **[process-engine-api](https://github.com/bpm-crafters/process-engine-api)** — the core, engine-agnostic API
-- 🧭 **[Adapter landscape](../docs/adapters.md)** · **[Documentation landscape](../docs/documentation.md)** — how the pieces fit together
+- 🧭 **[Adapter landscape](../docs/adapters.md)** — how the engine adapters fit together
 - ✨ **[awesome-bpm-tools](https://github.com/bpm-crafters/awesome-bpm-tools)** — a curated list of BPM(N) engines, frameworks & tooling
 
 ## Get involved
