@@ -121,16 +121,21 @@ gh release edit <releaseVersion> --target <master-release-commit-sha> --notes-fi
 ```
 Confirm: `git ls-remote --tags origin <releaseVersion>` points at the release commit.
 
-## 8. Bump develop to the next SNAPSHOT (via PR)
+## 8. Bump develop to the next SNAPSHOT + carry the README row (via PR)
 Always go through a PR — `develop` is protected by a ruleset in some repos (PR/squash, signed commits, required check "Build and run tests") and the flow should be identical everywhere.
+
+This PR must also carry the step-3b compatibility row back to `develop`. The row was only added on the release branch (merged into `master`), so without this `develop`'s table still ends at the previous release — and the next release cut from `develop` silently drops the current row, leaving a gap in the published table.
 ```
 git checkout -B chore/next-dev-version-<nextDevelopmentVersion> origin/develop
 ./mvnw versions:set -DnewVersion=<nextDevelopmentVersion> -DgenerateBackupPoms=false -DprocessAllModules=true
+```
+Re-apply the exact same `README.md` edit from step 3b on this branch: add the `<releaseVersion>` compatibility row at the top of the `## Compatibility` table (and the header engine badge if you updated it in 3b). The `versions:set` above leaves the POMs at `<nextDevelopmentVersion>-SNAPSHOT`, but the README row stays `<releaseVersion>` — same content as the row now on `master`.
+```
 git commit -am "Update for next development version"
 git push -u origin chore/next-dev-version-<nextDevelopmentVersion>
 gh pr create --base develop --title "chore: set next development version <nextDevelopmentVersion>" --body "..."
 ```
-Wait for the "Build and run tests" check to pass, then `gh pr merge <n> --squash --delete-branch`.
+The commit must contain both the POM bumps and the README compatibility row. Wait for the "Build and run tests" check to pass, then `gh pr merge <n> --squash --delete-branch`.
 
 > Note: a human-driven PR works because your commits are signed and attributed to your account, satisfying the ruleset. An Actions-bot PR would additionally need a GitHub App token (the stock `GITHUB_TOKEN` does not trigger CI) and an API-created commit for signing.
 
@@ -142,7 +147,11 @@ curl -s -o /dev/null -w "%{http_code}\n" \
 ```
   → expect `200`.
 - GitHub release `<releaseVersion>` published as Latest, milestone closed, `develop` on `<nextDevelopmentVersion>`.
-- `README.md` on `master` lists `<releaseVersion>` as the first compatibility row.
+- The top compatibility row in `README.md` equals `<releaseVersion>` on **both** `master` and `develop` — assert both, so the row does not silently drop from the next release:
+```
+git show origin/master:README.md | grep -A3 '## Compatibility'
+git show origin/develop:README.md | grep -A3 '## Compatibility'
+```
 
 ## Report
 Summarise: version released, artifacts on Central, release URL, develop version, and any manual notes fixes applied.
