@@ -65,8 +65,28 @@ git commit -am "Update versions for release"
 The commit must contain the POM bumps and the README table row.
 Confirm it is signed: `git cat-file commit HEAD | grep -i gpgsig` should show a signature header (local `%G?` may show `N` because there is no `allowedSignersFile` — that is fine; GitHub verifies against the registered key).
 
+## 5b. Change overview before the gate
+Before the approval gate, show the maintainer exactly what this release contains so they can
+judge how safe it is. Reuse the data source from step 2 (`git log <lastTag>..origin/develop`),
+no new mechanism.
+- Collect the changes since the last release tag and deduplicate the PR references:
+  `git log --oneline <lastTag>..origin/develop | grep -oE '#[0-9]+'`.
+- For each PR fetch its metadata: `gh pr view <n> --json number,title,labels,author,mergedAt`.
+- Print a Markdown table in the chat, sorted by merge date (newest first), with the columns
+  **PR**, **Titel**, **Typ** (label), **Autor**:
+```
+| PR    | Titel                                  | Typ            | Autor    |
+|-------|----------------------------------------|----------------|----------|
+| #42   | feat: support Operaton 2.1             | enhancement    | emaarco  |
+| #40   | fix: NPE beim Deployment               | bug            | someone  |
+```
+- Include direct-merge commits without an associated PR as their own rows (from the same
+  `git log` line) so nothing is lost.
+- Below the table, state the total count of PRs/commits in the release.
+
 ## 6. APPROVAL GATE → trigger the release (irreversible)
-Prepare the master merge locally first (safe, local only):
+The maintainer has seen the change overview from step 5b. Prepare the master merge locally
+first (safe, local only):
 ```
 git checkout -B master origin/master
 git merge --no-ff release/<releaseVersion> -m "Merge branch 'release/<releaseVersion>'"
