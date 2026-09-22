@@ -43,6 +43,15 @@ git checkout -B release/<releaseVersion> origin/develop
 - Do **not** pass `-DskipExamples` — the `examples` profile is active by default (`!skipExamples`), so `versions:set` bumps the examples modules too. Skipping it leaves them at the old version (drift).
 - Verify all POMs (root + every module + BOM + examples) now show `<releaseVersion>`; the parent `maven-parent` version must stay untouched.
 
+## 3b. Update the compatibility table in `README.md`
+The README has a `## Compatibility` table whose first row must be the release being cut. Its columns differ per repo (adapter version, engine version, API version, sometimes Spring Boot) — keep the existing columns and formatting, only add a row at the top.
+- Adapter version: `[<releaseVersion>](https://github.com/<owner>/<repo>/releases/tag/<releaseVersion>)` — link style as in the rows above.
+- Engine version: the engine property in the root `pom.xml` (`cibseven.version`, `camunda.version`, `operaton.version`, …); if it is not a root property, take it from the module POM or `dependencyManagement` that pins the engine.
+- API version: `process-engine-api.version`.
+- Spring Boot (if the table has that column): `spring-boot.version`, in the granularity the existing rows use (usually `major.minor`).
+- Also update any badge in the README header that carries the engine version (e.g. `Compatible with Operaton 2.1.3`).
+Show the proposed row to the user and let them correct it before continuing; a wrong table is published with the release tag.
+
 ## 4. Local sanity build (no deploy)
 ```
 ./mvnw clean verify -B -ntp -T4
@@ -53,6 +62,7 @@ Must be BUILD SUCCESS across all modules before continuing.
 ```
 git commit -am "Update versions for release"
 ```
+The commit must contain the POM bumps and the README table row.
 Confirm it is signed: `git cat-file commit HEAD | grep -i gpgsig` should show a signature header (local `%G?` may show `N` because there is no `allowedSignersFile` — that is fine; GitHub verifies against the registered key).
 
 ## 6. APPROVAL GATE → trigger the release (irreversible)
@@ -112,6 +122,7 @@ curl -s -o /dev/null -w "%{http_code}\n" \
 ```
   → expect `200`.
 - GitHub release `<releaseVersion>` published as Latest, milestone closed, `develop` on `<nextDevelopmentVersion>`.
+- `README.md` on `master` lists `<releaseVersion>` as the first compatibility row.
 
 ## Report
 Summarise: version released, artifacts on Central, release URL, develop version, and any manual notes fixes applied.
