@@ -1,0 +1,16 @@
+{
+  "name": "bpm-crafters",
+  "owner": {
+    "name": "bpm-crafters"
+  },
+  "metadata": {
+    "description": "Claude Code plugins for maintaining the bpm-crafters repositories."
+  },
+  "plugins": [
+    {
+      "name": "maven-central-release",
+      "source": "./plugins/maven-central-release",
+      "description": "Guides the manual Maven Central release of a bpm-crafters Maven project: version bump, verify, deploy via master push, milestone-based release notes, next-SNAPSHOT PR."
+    }
+  ]
+}
