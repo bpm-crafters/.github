@@ -1,0 +1,16 @@
+{
+  "name": "bpm-crafters",
+  "owner": {
+    "name": "bpm-crafters"
+  },
+  "metadata": {
+    "description": "Claude Code plugins for maintaining the bpm-crafters repositories."
+  },
+  "plugins": [
+    {
+      "name": "maintainer-tools",
+      "source": "./plugins/maintainer-tools",
+      "description": "Skills for maintaining bpm-crafters libraries — releasing to Maven Central and more."
+    }
+  ]
+}
