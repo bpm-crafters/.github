@@ -1,0 +1,10 @@
+{
+  "name": "maintainer-tools",
+  "description": "Skills for maintaining bpm-crafters libraries — releasing to Maven Central and more.",
+  "version": "1.0.0",
+  "author": {
+    "name": "bpm-crafters"
+  },
+  "repository": "https://github.com/bpm-crafters/.github",
+  "license": "Apache-2.0"
+}

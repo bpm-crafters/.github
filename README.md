@@ -13,12 +13,12 @@ This repository is also a [Claude Code plugin marketplace](https://code.claude.c
 
 ```bash
 /plugin marketplace add bpm-crafters/.github                 # once per machine
-/plugin install maven-central-release@bpm-crafters           # then install what you need
+/plugin install maintainer-tools@bpm-crafters           # then install what you need
 ```
 
 | Plugin | What it does |
 | --- | --- |
-| [`maven-central-release`](plugins/maven-central-release/) | `/maven-central-release:release-bpm-crafters-lib` guides a Maven Central release of a bpm-crafters project — version bump, verify, deploy via `master` push, release notes, next-SNAPSHOT PR. |
+| [`maintainer-tools`](plugins/maintainer-tools/) | Maintainer skills for bpm-crafters libraries. Currently `/maintainer-tools:release-bpm-crafters-lib`, a guided Maven Central release. |
 
 ```
 .claude-plugin/marketplace.json   # registers all plugins

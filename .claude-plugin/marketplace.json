@@ -8,9 +8,9 @@
   },
   "plugins": [
     {
-      "name": "maven-central-release",
-      "source": "./plugins/maven-central-release",
-      "description": "Guides the manual Maven Central release of a bpm-crafters Maven project: version bump, verify, deploy via master push, milestone-based release notes, next-SNAPSHOT PR."
+      "name": "maintainer-tools",
+      "source": "./plugins/maintainer-tools",
+      "description": "Skills for maintaining bpm-crafters libraries — releasing to Maven Central and more."
     }
   ]
 }
