@@ -130,12 +130,19 @@ git checkout -B chore/next-dev-version-<nextDevelopmentVersion> origin/develop
 ./mvnw versions:set -DnewVersion=<nextDevelopmentVersion> -DgenerateBackupPoms=false -DprocessAllModules=true
 ```
 Re-apply the exact same `README.md` edit from step 3b on this branch: add the `<releaseVersion>` compatibility row at the top of the `## Compatibility` table (and the header engine badge if you updated it in 3b). The `versions:set` above leaves the POMs at `<nextDevelopmentVersion>-SNAPSHOT`, but the README row stays `<releaseVersion>` — same content as the row now on `master`.
+
+**Gate — do not push until both are true.** This is the step that recurringly gets skipped, dropping the row from `develop`. After `git add -A`, before committing, confirm:
+```
+git diff --cached README.md   # MUST show the <releaseVersion> row added to ## Compatibility (and the badge if 3b changed it)
+git diff --cached '**/pom.xml' # MUST show the <nextDevelopmentVersion>-SNAPSHOT bump
+```
+If the `README.md` diff is empty, STOP — the row was not re-applied; go back and add it. Do not push a branch whose staged diff lacks the compatibility row.
 ```
 git commit -am "Update for next development version"
 git push -u origin chore/next-dev-version-<nextDevelopmentVersion>
 gh pr create --base develop --title "chore: set next development version <nextDevelopmentVersion>" --body "..."
 ```
-The commit must contain both the POM bumps and the README compatibility row. Wait for the "Build and run tests" check to pass, then `gh pr merge <n> --squash --delete-branch`.
+The commit MUST contain both the POM bumps and the README compatibility row — a PR missing either is wrong and must not be merged. Wait for the "Build and run tests" check to pass, then `gh pr merge <n> --squash --delete-branch`.
 
 > Note: a human-driven PR works because your commits are signed and attributed to your account, satisfying the ruleset. An Actions-bot PR would additionally need a GitHub App token (the stock `GITHUB_TOKEN` does not trigger CI) and an API-created commit for signing.
 
